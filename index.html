@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Will You Be Mine? ❤️</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', sans-serif;
+        background: linear-gradient(135deg, #ff4d6d, #ff85a2);
+        color: white;
+        text-align: center;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    .container {
+        padding: 60px 20px;
+        position: relative;
+        z-index: 2;
+    }
+
+    h1 {
+        font-size: 2.8em;
+    }
+
+    .heart {
+        font-size: 3em;
+        animation: beat 1s infinite;
+    }
+
+    @keyframes beat {
+        0%,100% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+    }
+
+    .buttons {
+        position: relative;
+        height: 220px;
+        margin-top: 30px;
+    }
+
+    button {
+        font-size: 1.2em;
+        padding: 15px 30px;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+    }
+
+    #yesBtn {
+        background: #fff;
+        color: #ff4d6d;
+        margin-right: 20px;
+    }
+
+    #noBtn {
+        background: #ff1e56;
+        color: white;
+        position: absolute;
+    }
+
+    /* 💖 Falling hearts */
+    .falling-heart {
+        position: fixed;
+        top: -10px;
+        font-size: 24px;
+        animation: fall linear forwards;
+        z-index: 1;
+    }
+
+    @keyframes fall {
+        to {
+            transform: translateY(110vh);
+            opacity: 0;
+        }
+    }
+
+    /* 🔐 Secret page */
+    #secretPage {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: linear-gradient(135deg, #ff85a2, #ff4d6d);
+        padding: 40px;
+        text-align: center;
+        z-index: 5;
+    }
+
+    #secretPage h2 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+    }
+
+    #secretPage p {
+        font-size: 1.3em;
+        line-height: 1.6;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container" id="mainPage">
+    <div class="heart">❤️</div>
+    <h1>Will You Be Mine?</h1>
+    <p>Think carefully… my heart is watching 👀💓</p>
+
+    <div class="buttons">
+        <button id="yesBtn" onclick="sayYes()">YES 💖</button>
+        <button id="noBtn" onmouseover="moveNo()">NO 💔</button>
+    </div>
+</div>
+
+<!-- 🔐 SECRET LOVE LETTER PAGE -->
+<div id="secretPage">
+    <h2>My Love Letter 💌</h2>
+    <p>
+        From the first moment you entered my life,<br>
+        my world became warmer and brighter 🌸<br><br>
+
+        You are not just someone I love,<br>
+        you are my comfort, my smile, my peace ❤️<br><br>
+
+        No matter what happens,<br>
+        my heart will always choose you — again and again 💖
+    </p>
+    <p><strong>Forever yours 😘</strong></p>
+</div>
+
+<script>
+    const englishTexts = [
+        "Are you sure? 😏",
+        "Missed me 😜",
+        "Try again 😆",
+        "You love me 😍",
+        "Just click YES ❤️",
+        "Stop running 😌",
+        "Heart says YES 💓",
+        "Fate says YES ✨",
+        "Destiny loading… 💫",
+        "No is not allowed 😜",
+        "Why lie to your heart? 😏",
+        "Your smile says YES 😊",
+        "Love detected ❤️",
+        "Click YES now 😍",
+        "Resistance is useless 😆",
+        "Love wins 💖",
+        "Be mine 😘",
+        "Still thinking? 😌",
+        "This is destiny 💫"
+    ];
+
+    const tamilTexts = [
+        "NO இல்ல 😌",
+        "யோவ் பிடிச்சிருக்கு ❤️",
+        "இதுவே YES தானே 😏",
+        "இதயம் சொல்றது YES 💓",
+        "இன்னும் ஓடுதா 😆",
+        "சரி போதும் 😜",
+        "நீ சிரிச்சுட்ட 😂",
+        "காதல் ஜெயிக்கும் 💖",
+        "NO வேலை செய்யல 😏",
+        "YES மட்டும் தான் option 😍",
+        "இதயம் உன்னைத்தான் தேடுது ❤️",
+        "இது காதல் தான் 😌",
+        "மனசு YES சொல்லுது 💓",
+        "இன்னும் நடிக்காத 😏",
+        "காதல் ஜெயிச்சுடும் 💕",
+        "YES அழகா இருக்கு 😍",
+        "போதும் ஓடுறது 😆",
+        "இதுதான் விதி ✨",
+        "இதயம் பிடிச்சிருக்கு ❤️",
+        "YES கிளிக் பண்ணு 😘"
+    ];
+
+    let count = 1, en = 0, ta = 0;
+
+    function moveNo() {
+        const noBtn = document.getElementById("noBtn");
+        noBtn.style.left = Math.random() * 300 + "px";
+        noBtn.style.top = Math.random() * 150 + "px";
+
+        if (count % 2 === 1) {
+            noBtn.innerText = englishTexts[en++ % englishTexts.length];
+        } else {
+            noBtn.innerText = tamilTexts[ta++ % tamilTexts.length];
+        }
+        count++;
+    }
+
+    /* 💖 YES clicked */
+    function sayYes() {
+        startHeartRain();
+        setTimeout(() => {
+            document.getElementById("mainPage").style.display = "none";
+            document.getElementById("secretPage").style.display = "block";
+        }, 1500);
+    }
+
+    /* 💖 Heart rain */
+    function startHeartRain() {
+        setInterval(() => {
+            const heart = document.createElement("div");
+            heart.className = "falling-heart";
+            heart.innerText = "💖";
+            heart.style.left = Math.random() * window.innerWidth + "px";
+            heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }, 200);
+    }
+</script>
+
+</body>
+</html>

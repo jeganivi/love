@@ -2,209 +2,198 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Will You Be Mine? ❤️</title>
+<title>For You ❤️</title>
 
 <style>
-    body {
-        margin: 0;
-        padding: 0;
-        font-family: 'Segoe UI', sans-serif;
-        background: linear-gradient(135deg, #ff4d6d, #ff85a2);
-        color: white;
-        text-align: center;
-        height: 100vh;
-        overflow: hidden;
-    }
+* { box-sizing: border-box; }
 
-    .container {
-        padding: 60px 20px;
-        position: relative;
-        z-index: 2;
-    }
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #ff4d6d, #ff85a2);
+    color: white;
+    height: 100vh;
+    overflow: hidden;
+    text-align: center;
+}
 
-    h1 {
-        font-size: 2.8em;
-    }
+.center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 1s ease, transform 1s ease;
+}
 
-    .heart {
-        font-size: 3em;
-        animation: beat 1s infinite;
-    }
+h1 { font-size: 2.8em; }
+p { font-size: 1.2em; }
 
-    @keyframes beat {
-        0%,100% { transform: scale(1); }
-        50% { transform: scale(1.2); }
-    }
+button {
+    margin-top: 20px;
+    padding: 14px 35px;
+    font-size: 1.1em;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+}
 
-    .buttons {
-        margin-top: 30px;
-    }
+input {
+    padding: 14px;
+    font-size: 1.1em;
+    border-radius: 25px;
+    border: none;
+    text-align: center;
+    outline: none;
+    margin-top: 15px;
+}
 
-    button {
-        font-size: 1.2em;
-        padding: 15px 30px;
-        border: none;
-        border-radius: 30px;
-        cursor: pointer;
-    }
+.heart {
+    font-size: 3.5em;
+    animation: beat 1s infinite;
+}
 
-    #yesBtn {
-        background: #fff;
-        color: #ff4d6d;
-        margin-right: 20px;
-    }
+@keyframes beat {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
 
-    #noBtn {
-        background: #ff1e56;
-        color: white;
-        position: fixed; /* 🔥 IMPORTANT */
-        transition: all 0.25s ease;
-    }
+/* PAGES */
+#question, #passwordPage, #secret { display: none; }
 
-    /* 💖 Falling hearts */
-    .falling-heart {
-        position: fixed;
-        top: -10px;
-        font-size: 24px;
-        animation: fall linear forwards;
-        z-index: 1;
-    }
+/* BUTTONS */
+#openBtn, #yesBtn {
+    background: white;
+    color: #ff4d6d;
+}
 
-    @keyframes fall {
-        to {
-            transform: translateY(110vh);
-            opacity: 0;
-        }
-    }
+#noBtn {
+    background: #ff1e56;
+    color: white;
+    position: fixed;
+    transition: 0.25s;
+}
 
-    /* 🔐 Secret page */
-    #secretPage {
-        display: none;
-        position: fixed;
-        inset: 0;
-        background: linear-gradient(135deg, #ff85a2, #ff4d6d);
-        padding: 40px;
-        text-align: center;
-        z-index: 5;
-    }
+/* HEART RAIN */
+.falling-heart {
+    position: fixed;
+    top: -10px;
+    font-size: 24px;
+    animation: fall linear forwards;
+}
 
-    #secretPage h2 {
-        font-size: 2.5em;
-        margin-bottom: 20px;
-    }
-
-    #secretPage p {
-        font-size: 1.3em;
-        line-height: 1.6;
-    }
+@keyframes fall {
+    to { transform: translateY(110vh); opacity: 0; }
+}
 </style>
 </head>
 
 <body>
 
-<div class="container" id="mainPage">
+<!-- 🌸 LANDING -->
+<div class="center" id="landing">
+    <div class="heart">💖</div>
+    <h1>Hey You...</h1>
+    <p>I wrote something just for you ✨</p>
+    <button id="openBtn" onclick="openLetter()">Open 💌</button>
+</div>
+
+<!-- 💘 QUESTION -->
+<div class="center" id="question">
     <div class="heart">❤️</div>
     <h1>Will You Be Mine?</h1>
-    <p>Think carefully… my heart is watching 👀💓</p>
-
-    <div class="buttons">
-        <button id="yesBtn" onclick="sayYes()">YES 💖</button>
+    <p>My heart is watching 👀💓</p>
+    <div>
+        <button id="yesBtn" onclick="goPassword()">YES 💖</button>
         <button id="noBtn" onmouseover="moveNo()">NO 💔</button>
     </div>
 </div>
 
-<!-- 🔐 SECRET LOVE LETTER PAGE -->
-<div id="secretPage">
-    <h2>My Love Letter 💌</h2>
+<!-- 🔐 PASSWORD -->
+<div class="center" id="passwordPage">
+    <div class="heart">🔐</div>
+    <h1>Secret Access</h1>
+    <p>Only special people know the password 😏</p>
+    <input type="password" id="pwd" placeholder="Enter password 💕">
+    <button onclick="checkPassword()">Unlock 💖</button>
+    <p id="error" style="margin-top:10px;"></p>
+</div>
+
+<!-- 💌 LOVE LETTER -->
+<div class="center" id="secret">
+    <h1>My Love Letter 💌</h1>
     <p>
-        From the first moment you entered my life,<br>
-        my world became warmer and brighter 🌸<br><br>
-
-        You are not just someone I love,<br>
-        you are my comfort, my smile, my peace ❤️<br><br>
-
-        No matter what happens,<br>
-        my heart will always choose you — again and again 💖
+        From the moment you entered my life,<br>
+        everything felt warmer 🌸<br><br>
+        You are my peace, my smile,<br>
+        and my favorite feeling ❤️<br><br>
+        My heart chose you — always 💖
     </p>
     <p><strong>Forever yours 😘</strong></p>
 </div>
 
 <script>
-    const englishTexts = [
-        "Are you sure? 😏",
-        "Missed me 😜",
-        "Try again 😆",
-        "You love me 😍",
-        "Just click YES ❤️",
-        "Stop running 😌",
-        "Heart says YES 💓",
-        "Fate says YES ✨",
-        "Destiny loading… 💫",
-        "No is not allowed 😜",
-        "Love detected ❤️",
-        "Resistance is useless 😆",
-        "Love wins 💖",
-        "Be mine 😘"
-    ];
+const SECRET_PASSWORD = "jegaNivi"; // 🔑 CHANGE THIS
 
-    const tamilTexts = [
-        "NO இல்ல 😌",
-        "இதயம் சொல்றது YES 💓",
-        "காதல் ஜெயிக்கும் 💖",
-        "இன்னும் ஓடுதா 😆",
-        "YES மட்டும் தான் option 😍",
-        "இதயம் உன்னைத்தான் தேடுது ❤️",
-        "மனசு YES சொல்லுது 💓",
-        "இதுதான் விதி ✨",
-        "YES கிளிக் பண்ணு 😘"
-    ];
+const englishTexts = [
+    "Are you sure? 😏","Missed me 😜","Try again 😆",
+    "You love me 😍","Just click YES ❤️","Love wins 💖"
+];
 
-    let count = 1, en = 0, ta = 0;
+const tamilTexts = [
+    "NO இல்ல 😌","இதயம் சொல்றது YES 💓",
+    "காதல் ஜெயிக்கும் 💖","YES மட்டும் தான் option 😍"
+];
 
-    function moveNo() {
-        const noBtn = document.getElementById("noBtn");
+let count=1,en=0,ta=0;
 
-        const btnWidth = noBtn.offsetWidth;
-        const btnHeight = noBtn.offsetHeight;
+function openLetter() {
+    hide("landing");
+    show("question");
+}
 
-        const maxX = window.innerWidth - btnWidth - 20;
-        const maxY = window.innerHeight - btnHeight - 20;
+function goPassword() {
+    startHearts();
+    hide("question");
+    setTimeout(()=>show("passwordPage"),1000);
+}
 
-        const randomX = Math.random() * maxX;
-        const randomY = Math.random() * maxY;
+function checkPassword() {
+    const val = document.getElementById("pwd").value;
+    const err = document.getElementById("error");
 
-        noBtn.style.left = randomX + "px";
-        noBtn.style.top = randomY + "px";
-
-        if (count % 2 === 1) {
-            noBtn.innerText = englishTexts[en++ % englishTexts.length];
-        } else {
-            noBtn.innerText = tamilTexts[ta++ % tamilTexts.length];
-        }
-        count++;
+    if(val === SECRET_PASSWORD) {
+        hide("passwordPage");
+        show("secret");
+    } else {
+        err.innerText = "Wrong password 😏 Try again 💕";
     }
+}
 
-    /* 💖 YES clicked */
-    function sayYes() {
-        startHeartRain();
-        setTimeout(() => {
-            document.getElementById("mainPage").style.display = "none";
-            document.getElementById("secretPage").style.display = "block";
-        }, 1500);
-    }
+function moveNo() {
+    const btn = document.getElementById("noBtn");
+    btn.style.left = Math.random()*(window.innerWidth-120)+"px";
+    btn.style.top = Math.random()*(window.innerHeight-60)+"px";
+    btn.innerText = count++%2
+        ? englishTexts[en++%englishTexts.length]
+        : tamilTexts[ta++%tamilTexts.length];
+}
 
-    /* 💖 Heart rain */
-    function startHeartRain() {
-        setInterval(() => {
-            const heart = document.createElement("div");
-            heart.className = "falling-heart";
-            heart.innerText = "💖";
-            heart.style.left = Math.random() * window.innerWidth + "px";
-            heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 5000);
-        }, 200);
-    }
+function startHearts() {
+    setInterval(()=>{
+        const h=document.createElement("div");
+        h.className="falling-heart";
+        h.innerText="💖";
+        h.style.left=Math.random()*window.innerWidth+"px";
+        h.style.animationDuration=(Math.random()*2+3)+"s";
+        document.body.appendChild(h);
+        setTimeout(()=>h.remove(),5000);
+    },200);
+}
+
+function hide(id){ document.getElementById(id).style.display="none"; }
+function show(id){ document.getElementById(id).style.display="flex"; }
 </script>
 
 </body>

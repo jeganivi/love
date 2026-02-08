@@ -31,7 +31,6 @@ h1 { font-size: 2.8em; }
 p { font-size: 1.2em; }
 
 button {
-    margin-top: 20px;
     padding: 14px 35px;
     font-size: 1.1em;
     border: none;
@@ -59,10 +58,29 @@ input {
     50% { transform: scale(1.2); }
 }
 
+input {
+    text-align: center;
+}
+
+
+.password-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;   /* 🔥 MAIN FIX */
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.password-box input,
+.password-box button {
+    width: 260px;          /* 🔥 SAME WIDTH */
+}
+
+
 /* PAGES */
 #question, #passwordPage, #secret { display: none; }
 
-/* BUTTONS */
+/* BUTTON COLORS */
 #openBtn, #yesBtn {
     background: white;
     color: #ff4d6d;
@@ -71,8 +89,15 @@ input {
 #noBtn {
     background: #ff1e56;
     color: white;
-    position: fixed;
     transition: 0.25s;
+}
+
+/* 👉 YES / NO WRAPPER (MAIN FIX) */
+.choice-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 24px;            /* 🔥 SPACE BETWEEN BUTTONS */
+    margin-top: 30px;
 }
 
 /* HEART RAIN */
@@ -104,7 +129,9 @@ input {
     <div class="heart">❤️</div>
     <h1>Will You Be Mine?</h1>
     <p>My heart is watching 👀💓</p>
-    <div>
+
+    <!-- ✅ FIXED BUTTON LAYOUT -->
+    <div class="choice-buttons">
         <button id="yesBtn" onclick="goPassword()">YES 💖</button>
         <button id="noBtn" onmouseover="moveNo()">NO 💔</button>
     </div>
@@ -115,8 +142,11 @@ input {
     <div class="heart">🔐</div>
     <h1>Secret Access</h1>
     <p>Only special people know the password 😏</p>
+    <div class="password-box">
     <input type="password" id="pwd" placeholder="Enter password 💕">
     <button onclick="checkPassword()">Unlock 💖</button>
+</div>
+
     <p id="error" style="margin-top:10px;"></p>
 </div>
 
@@ -134,17 +164,36 @@ input {
 </div>
 
 <script>
-const SECRET_PASSWORD = "jegaNivi"; // 🔑 CHANGE THIS
+const SECRET_PASSWORD = "forever"; // 🔑 CHANGE THIS
 
-const englishTexts = [
-    "Are you sure? 😏","Missed me 😜","Try again 😆",
-    "You love me 😍","Just click YES ❤️","Love wins 💖"
-];
+    const englishTexts = [
+        "Are you sure? 😏",
+        "Missed me 😜",
+        "Try again 😆",
+        "You love me 😍",
+        "Just click YES ❤️",
+        "Stop running 😌",
+        "Heart says YES 💓",
+        "Fate says YES ✨",
+        "Destiny loading… 💫",
+        "No is not allowed 😜",
+        "Love detected ❤️",
+        "Resistance is useless 😆",
+        "Love wins 💖",
+        "Be mine 😘"
+    ];
 
-const tamilTexts = [
-    "NO இல்ல 😌","இதயம் சொல்றது YES 💓",
-    "காதல் ஜெயிக்கும் 💖","YES மட்டும் தான் option 😍"
-];
+    const tamilTexts = [
+        "NO இல்ல 😌",
+        "இதயம் சொல்றது YES 💓",
+        "காதல் ஜெயிக்கும் 💖",
+        "இன்னும் ஓடுதா 😆",
+        "YES மட்டும் தான் option 😍",
+        "இதயம் உன்னைத்தான் தேடுது ❤️",
+        "மனசு YES சொல்லுது 💓",
+        "இதுதான் விதி ✨",
+        "YES கிளிக் பண்ணு 😘"
+    ];
 
 let count=1,en=0,ta=0;
 
@@ -173,6 +222,7 @@ function checkPassword() {
 
 function moveNo() {
     const btn = document.getElementById("noBtn");
+    btn.style.position = "absolute";   // 👈 becomes free only on hover
     btn.style.left = Math.random()*(window.innerWidth-120)+"px";
     btn.style.top = Math.random()*(window.innerHeight-60)+"px";
     btn.innerText = count++%2
